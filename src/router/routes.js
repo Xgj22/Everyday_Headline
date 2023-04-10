@@ -4,7 +4,7 @@ export default [
     //重定向,在项目跑起来的时候，访问/，立刻访问到首页
     {
         path:'*',
-        redirect:"/",
+        redirect:"/home",
         meta:{
             ishow:true
         }

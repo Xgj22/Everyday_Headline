@@ -23,3 +23,20 @@ export const getUserInfo = () => {
         method:'get'
     })
 }
+
+// 获取文章列表
+export const getChannelsList = () => {
+    return request({
+        url:'/v1_0/channels',
+        method:'get'
+    })
+}
+
+// 获取文章新闻推荐
+export const getArticleList = params => {
+    return request({
+        url:'/v1_0/articles',
+        method:'get',
+        params
+    })
+}
