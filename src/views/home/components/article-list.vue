@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getArticleList } from '@/api/user.js'
+import { getArticleList } from '@/api/article.js'
 import articleItem from '@/components/articleItem'
 
 export default {
@@ -47,7 +47,7 @@ export default {
     },
     methods:{
         async onLoad() {
-            // onload 异步更新数据分为三步
+            // onload 异步更新数据分为四步
             // 1.获取请求数据
             try {
                 const res = await getArticleList({

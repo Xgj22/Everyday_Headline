@@ -1,5 +1,4 @@
 
-
 export default [
     //重定向,在项目跑起来的时候，访问/，立刻访问到首页
     {
@@ -12,6 +11,10 @@ export default [
     {
         path:'/login',
         component:() => import('@/views/login')
+    },
+    {
+        path:'/search',
+        component:() => import('@/views/search')
     },
     {
         path:'/',

@@ -3,7 +3,16 @@
         <van-nav-bar
             class="page-nav-bar"
         >
-            <van-button round size="small" slot="title" icon="search" class="search-btn">搜索</van-button>
+            <van-button 
+                round 
+                size="small" 
+                slot="title" 
+                icon="search" 
+                class="search-btn"
+                @click="toSearch" 
+            >
+                搜索
+            </van-button>
         </van-nav-bar>
         <van-tabs class="vanTabs" v-model="active">
             <van-tab :title="ch.name" v-for="ch in channelsList" :key="ch.id" class="vanTab">
@@ -21,8 +30,14 @@
             :style="{ height: '100%',width:'100%' }" 
             closeable 
             close-icon-position="top-left"
+            
         >
-            <channelEdit :channelsList = "channelsList" :channelActive="active"></channelEdit>
+            <channelEdit 
+                :channelsList = "channelsList" 
+                :channelActive="active" 
+                @updateActive="onUpdateActive"
+            >
+            </channelEdit>
         </van-popup>
     </div>
 </template>
@@ -31,26 +46,38 @@
 import { getChannelsList } from '@/api/user'
 import articleList from './components/article-list.vue'
 import channelEdit from './components/channel-edit.vue'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage'
 
 export default {
     name:'homeIndex',
     data() {
         return {
             channelsList:[],
-            show: false,
-            active: 0
+            show: false,// 弹窗标识
+            active: 0 // 高亮数组下标
         }
     },
     components:{
         articleList,
         channelEdit
     },
+    computed:{
+        ...mapState(['user'])
+    },
     methods:{
         async loadChannelsList(){
             try {
-                const res = await getChannelsList()
-                this.channelsList = res.data.channels
-                console.log(this.channelsList)
+                if(this.user){
+                    // 已经登录在线获取 channelsList
+                    const res = await getChannelsList()
+                    this.channelsList = res.data.channels
+                    console.log(this.channelsList)
+                }else{
+                    // 未登录在本地获取 channelsList
+                    this.channelsList = getItem('TOUTIAO_CHANNELS')
+                }
+                
             } catch (error) {
                 return console.log(error.message)
             }
@@ -58,9 +85,19 @@ export default {
         showPopup() {
             this.show = true;
         },
+        onUpdateActive(index){
+            this.show = false
+            this.active = index
+        },
+        toSearch(){
+            this.$router.push('/search')
+        }
     },
     created(){
         this.loadChannelsList()
+    },
+    mounted(){
+
     }
 }
 </script>

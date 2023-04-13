@@ -14,6 +14,7 @@ import 'amfe-flexible'
 
 // 加载 dayjs 初始化配置
 import './utils/dayjs'
+
 Vue.use(Vant)
 
 Vue.config.productionTip = false
@@ -21,5 +22,8 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
+  beforeCreate(){
+    Vue.prototype.$bus = this
+  },
 }).$mount('#app')
