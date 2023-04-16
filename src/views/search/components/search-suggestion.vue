@@ -49,19 +49,16 @@ export default {
             try {
                 const res = await getSearchSuggestion(q)
                 this.searchSuggestionList = res.data.options
-                console.log('----',this.searchSuggestionList)
             } catch (error) {
                 return console.log(error)
             }
         },
         hightlight(text){
-            console.log(this.searchText)
             // console.log(this.searchSuggestionList)
             // 思路
             //  replace(正则表达式,字符串) 可以匹配正则表达式中符合条件的元素替换成指定字符串
             // 将符合条件的字符串（与搜索框文本相同），替换成 带有 active Style 的 html 字符串
             const hightlightStr = `<span class="active">${this.searchText}</span>`
-            console.log(hightlightStr)
             const reg = new RegExp(this.searchText,'gi')
             return text.replace(reg,hightlightStr)
         }

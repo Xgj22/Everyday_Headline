@@ -1,6 +1,15 @@
 <template>
     <div>
-        <van-cell v-for="(item,index) in list" :key="index" >
+        <van-cell 
+            v-for="(item,index) in list" 
+            :key="index"
+            :to="{
+                name:'article',
+                params:{
+                    articleId:item.art_id
+                }
+            }"
+        >
             <template #title>
                 <span class="custom-title van-multi-ellipsis--l2">{{ item.title }}</span>
                 <!-- <van-tag type="danger">标签</van-tag> -->

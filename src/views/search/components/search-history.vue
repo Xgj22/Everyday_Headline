@@ -5,17 +5,21 @@
                 <van-icon name="delete-o"></van-icon>
             </div>
         </van-cell>
-        <van-cell title="单元格" value="内容" />
-        <van-cell title="单元格" value="内容" />
-        <van-cell title="单元格" value="内容" />
-        <van-cell title="单元格" value="内容" />
-        <van-cell title="单元格" value="内容" />
+        <van-cell v-for="(history,index) in historyList" :key="index">
+            <div slot="title">{{ history }}</div>
+        </van-cell>
     </div>
 </template>
 
 <script>
 export default {
-    name:'search-history'
+    name:'search-history',
+    props:{
+        historyList:{
+            type:Array,
+            required:true
+        }
+    }
 }
 </script>
 

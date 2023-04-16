@@ -8,7 +8,7 @@
             error-text="请求失败，点击重新加载"   
             @load="onLoad"
         >
-            <van-cell v-for="res in list" :key="res.art_id" :title="res.title" />
+            <van-cell v-for="res in list" :key="res.art_id" :title="res.title" @click="$emit('resultSearch',res.title)"/>
         </van-list>
     </div>
 </template>

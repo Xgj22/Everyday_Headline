@@ -25,6 +25,7 @@
             </div>
 
         </van-tabs>
+        <!-- 侧边弹窗 -->
         <van-popup 
             v-model="show" 
             :style="{ height: '100%',width:'100%' }" 
@@ -70,6 +71,7 @@ export default {
             try {
                 if(this.user){
                     // 已经登录在线获取 channelsList
+                    console.log(123)
                     const res = await getChannelsList()
                     this.channelsList = res.data.channels
                     console.log(this.channelsList)
@@ -79,7 +81,7 @@ export default {
                 }
                 
             } catch (error) {
-                return console.log(error.message)
+                return console.log(error)
             }
         },
         showPopup() {

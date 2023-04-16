@@ -17,6 +17,12 @@ export default [
         component:() => import('@/views/search')
     },
     {
+        path:'/article/:articleId',
+        name:'article',
+        component:() => import('@/views/article'),
+        props:true // 将路由中的参数映射到组件当中
+    },
+    {
         path:'/',
         // name:'layout',
         component:()=>import('@/views/Layout'),

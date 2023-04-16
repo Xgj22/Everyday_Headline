@@ -12,13 +12,20 @@
                 @focus="isResultShow = false"
             />
         </form>
-        <searchResult :searchText="searchText" v-if="isResultShow"></searchResult>
+        <searchResult 
+            :searchText="searchText" 
+            v-if="isResultShow"
+            @resultSearch="onSearch"
+        ></searchResult>
         <search-suggestion 
             v-else-if="searchText"
             :searchText="searchText"
             @suggestSearch="onSearch"
         ></search-suggestion>
-        <searchHistory v-else></searchHistory>
+        <searchHistory 
+            v-else
+            :historyList="historyList"
+        ></searchHistory>
     </div>
 </template>
 
@@ -35,7 +42,8 @@ export default {
             searchText: '',
             isResultShow:false,
             searchSuggestionList:[],
-            page:1 // 获取请求结果页面数，每次请求成功加一
+            page:1, // 获取请求结果页面数，每次请求成功加一
+            historyList:[]
         };
     },
     components:{
@@ -48,9 +56,10 @@ export default {
         async onSearch(val) {
             this.isResultShow = true
             this.searchText = val
+            this.historyList.push(this.searchText)
         },
         onCancel() {
-            this.$toast('取消');
+            this.$router.back()
         },
 
     },

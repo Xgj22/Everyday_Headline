@@ -9,6 +9,9 @@ module.exports = {
             return file.indexOf('vant') !== -1 ? 37.5 : 75;
         },
         propList: ['*'],
+        // 配置不要转换的资源
+        // 这里出现 bug 没有生效
+        exclude: /github-markdown\.css/i
       },
     },
 };

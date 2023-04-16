@@ -17,7 +17,7 @@ dayjs.locale('zh-cn')
 // 使用方式:{[ 表达式  过滤器名称 }]
 // 管道符前而的表达式的结果会作为参数传递到过滤器函数中// 过滤器的返回值会谊染到使用过滤器的模板位置
 Vue.filter('relativeTime',value => {
-    return dayjs() .to(dayjs(value))
+    return dayjs().to(dayjs(value))
 })
 // dayjs() 张取当前最新时间
 // console.log(dayjs().format('YYYY-MM-DD'))

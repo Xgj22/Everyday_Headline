@@ -32,3 +32,19 @@ export const getChannelsList = () => {
     })
 }
 
+// 关注用户
+export const followUser = data => {
+    return request({
+        url:'/v1_0/user/followings',
+        method:'post',
+        data
+    })
+}
+
+// 取消关注用户
+export const deleteFollowUser = target => {
+    return request({
+        url:`/v1_0/user/followings/${target}`,
+        method:'delete'
+    })
+}

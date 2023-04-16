@@ -2,9 +2,22 @@
 
 import axios from "axios";
 import store from '@/store/index'
+// import JSONBig from 'json-bigint'
 
 const request = axios.create({
-    baseURL:'http://toutiao.itheima.net/'
+    baseURL:'http://toutiao.itheima.net/',
+
+    // 自定义后端返回的数据
+    // data ：后端返回的原始数据，JSON 格式的字符串
+    // transformResponse:[{
+    //     function (data) {
+    //         try {
+    //             return JSONBig.parse(data)
+    //         } catch (error) {
+    //             return data
+    //         }
+    //     }
+    // }]
 })
 
 // 请求拦截器
