@@ -5,22 +5,24 @@
             :finished="finished"
             finished-text="没有更多了"
             @load="onLoad"
+            offset="100"
         >
-            <!-- <articleItem></articleItem> -->
-            <van-cell v-for="item in list" :key="item.aut_id" :title="item.content" />
+            <!-- <articleItem></articleItem> v-for="(item,index) in list" :key="index" :title="item.content" -->
+            <commentItem :cmtlist="list"/>
         </van-list>
     </div>
 </template>
 
 <script>
 import { getCommentList } from '@/api/comment';
-import  articleItem from '@/components/articleItem'
+import commentItem from './comment-item.vue';
 
 export default {
     name:'articleComments',
     data() {
         return {
-            list: [],
+            // list 换成从父组件中传入
+            // list: [],
             loading: false,
             finished: false,
             offset:null
@@ -30,10 +32,14 @@ export default {
         articleId:{
             type:[Number,String,Object],
             required:true
+        },
+        list:{
+            type:Array,
+            default:() => [] //默认值为空数组
         }
     },
     components:{
-        articleItem
+        commentItem
     },
     methods: {
         async onLoad() {
@@ -45,8 +51,17 @@ export default {
                     offset:this.offset,
                     limit:null
                 })
-                this.list = res.data.results
-                console.log(res.data.results)
+                // 拿到数据把数据更新到 list 中
+                this.list.push(...res.data.results)
+                
+                // 修改 loading 状态
+                this.loading = false
+                if(res.data.results.length){
+                    this.offset = res.data.last_id
+                }else{
+                    this.finished = true
+                }
+                
             } catch (error) {
                 return console.log(error)
             }
@@ -56,5 +71,8 @@ export default {
 </script>
 
 <style>
-
+.articleCommentsContainer{
+    height: 50vh;
+    overflow-y: auto;
+}
 </style>

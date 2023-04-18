@@ -107,7 +107,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="less">
 .articleList-container{
     /* 设置容器的高度,不同页面的内容才不会随着 body 的滚动而滚动
         vh 是 css3 的新特性,相对视口的百分比高度

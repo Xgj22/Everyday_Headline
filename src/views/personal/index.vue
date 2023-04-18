@@ -12,7 +12,7 @@
                     <img :src=" userInfo.photo " class="avatar">
                     <span class="text">{{ userInfo.name }}</span>
                 </div>
-                <van-button round native-type="button" class="btn">
+                <van-button round native-type="button" class="btn" @click="$router.push('/profile')">
                     编辑资料
                 </van-button>
             </div>

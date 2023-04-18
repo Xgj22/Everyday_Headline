@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="articleContainer">
         <!-- Header 区域 -->
         <van-nav-bar fixed title="文章详情" left-arrow @click-left="$router.back()" />
         
@@ -38,13 +38,34 @@
             <!-- 分割线 -->
             <van-divider>End</van-divider>
 
-            <articleComments :articleId="articleId"></articleComments>
+            <!-- 评论区 -->
+            <!-- 疑惑点解除：从父组件传过去子组件的数据，子组件修改后父组件也会修改 -->
+            <articleComments
+                :list="commentList" 
+                :articleId="articleId"
+                ref="articleComment"
+            ></articleComments>
 
             <!-- 点赞 -->
             <div class="like-box">
                 <van-button icon="good-job" type="danger" size="small">已点赞</van-button>
                 <van-button icon="good-job-o" type="danger" plain size="small">点赞</van-button>
             </div>
+
+            <div class="footer" @click="isPostShow = true">
+                <van-field placeholder="评论一下" />
+            </div>
+
+            <van-popup
+                v-model="isPostShow"
+                position="bottom"
+                :style="{ height: '10%' }"
+            >
+                <commentPost 
+                    :target="articleId"
+                    @post-success="onPostSuccess"
+                ></commentPost>
+            </van-popup>
         </div>
 
         <!-- 加载失败：404 -->
@@ -66,7 +87,9 @@
 import { getArticleDetail } from '@/api/article';
 import followUserComponent from '@/components/follow-user'
 import { ImagePreview } from 'vant';
-import articleComments from './components/article-comments.vue';
+import articleComments from './components/comment-list.vue';
+
+import commentPost from './components/comment-post'
 
 export default {
     name:'articleIndex',
@@ -74,7 +97,10 @@ export default {
         return {
             isLoading:true,
             article:null,
-            followLoading:false
+            followLoading:false,
+            isPostShow:false,
+            content:'',
+            commentList:[]
         }
     },
     props:{
@@ -85,7 +111,8 @@ export default {
     },
     components:{
         followUserComponent,
-        articleComments
+        articleComments,
+        commentPost
     },
     methods:{
         async loadArticleDetail(){
@@ -129,7 +156,14 @@ export default {
             });
 
         },
-        
+        onPostSuccess(data){
+            // 关闭弹窗
+            this.isPostShow = false
+            this.$toast.success('发布成功');
+            // 将 新元素 加到数组最前方，并且刷新 DOM
+            this.commentList.unshift(data.new_obj)
+            console.log(data)
+        }
     },
     created(){
         this.loadArticleDetail()
@@ -139,6 +173,12 @@ export default {
 
 <style scoped lang="less">
 @import './github-markdown.css';
+
+.articleContainer{
+    // height: 80vh;
+    
+    padding-bottom: 45px;
+}
 /deep/.van-nav-bar__content{
     background-color: #3396fb;
     .van-icon{
@@ -157,6 +197,7 @@ export default {
     justify-content: center;
 }
 .article-container {
+    // height: 80vh;
   padding: 10px;
   margin-top: 46px;
 }
@@ -207,6 +248,16 @@ export default {
     }
     .retry-btn{
         color: #a7a7a7;
+    }
+}
+.footer{
+    position: fixed;
+    bottom: 25px;
+    width: 100%;
+    height: 30px;
+
+    .btn{
+        margin-right: 80px;
     }
 }
 </style>

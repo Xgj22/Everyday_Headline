@@ -9,3 +9,12 @@ export const getCommentList = params => {
         params
     })
 }
+
+// 对文章进行评论
+export const addComment = data => {
+    return request({
+        url:'/v1_0/comments',
+        method:'post',
+        data
+    })
+}

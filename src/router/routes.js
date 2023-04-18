@@ -17,6 +17,10 @@ export default [
         component:() => import('@/views/search')
     },
     {
+        path:'/profile',
+        component:() => import('@/views/user-profile')
+    },
+    {
         path:'/article/:articleId',
         name:'article',
         component:() => import('@/views/article'),
